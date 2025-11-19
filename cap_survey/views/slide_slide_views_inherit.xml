@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cap_survey_slide_slide_form_inherit" model="ir.ui.view">
+            <field name="name">cap.survey.slide.slide.form.inherit</field>
+            <field name="model">slide.slide</field>
+            <field name="inherit_id" ref="website_slides_survey.slide_slide_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='survey_id']" position="replace">
+                    <field  name="survey_id"
+                            invisible="slide_category != 'certification'"
+                            required="slide_category == 'certification'"
+                            context="{'default_certification': True, 'default_scoring_type': 'scoring_without_answers'}"
+                    />
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

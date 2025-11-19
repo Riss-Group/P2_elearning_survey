@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"Language: fr\n"
+
+msgid "Database URL"
+msgstr "URL de la base de données"
+
+msgid "Database Name"
+msgstr "Nom de la base de données"
+
+msgid "User"
+msgstr "Utilisateur"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Code Question"
+msgstr "Question de code"
+
+msgid "Stores the result of a code-type question."
+msgstr "Enregistre le résultat d'une question de type code."
+
+msgid "A question can either be skipped or answered, not both."
+msgstr "Une question peut être sautée ou répondue, pas les deux."
+
+msgid "The answer must be in the right type"
+msgstr "La réponse doit être du bon type"
+
+msgid "Please enter the exact database name as configured on the server."
+msgstr "Veuillez entrer le nom exact de la base de données tel que configuré sur le serveur."
+
+msgid "Enter your Odoo email address."
+msgstr "Entrez votre adresse e-mail Odoo."
+
+msgid "Enter your Odoo password."
+msgstr "Entrez votre mot de passe Odoo."
+
+msgid "You have to copy/paste the URL without the '/' at the end."
+msgstr "Vous devez copier/coller l'URL sans le '/' à la fin."
+
+msgid "Contact with the following criteria: "
+msgstr "Contact avec les critères suivants :"
+
+msgid "is"
+msgstr "est"
+
+msgid "is not"
+msgstr "n'est pas"
+
+msgid "is greater than"
+msgstr "est supérieur à"
+
+msgid "is greater than or equal to"
+msgstr "est supérieur ou égal à"
+
+msgid "is less than"
+msgstr "est inférieur à"
+
+msgid "is less than or equal to"
+msgstr "est inférieur ou égal à"
+
+msgid "is in"
+msgstr "est dans"
+
+msgid "is not in"
+msgstr "n'est pas dans"
+
+msgid "contains"
+msgstr "contient"
+
+msgid "does not contain"
+msgstr "ne contient pas"

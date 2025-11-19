@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="domain_configurator_action" model="ir.actions.act_window">
+        <field name="name">Domains</field>
+        <field name="res_model">domain.configurator</field>
+        <field name="view_mode">form</field>
+    </record>
+    
+    <menuitem id="domain_maker_menu_root" name="Domain Maker" web_icon="cap_domain_maker,static/description/icon_domain_maker.png">
+            <menuitem id="domain_maker_first_level_menu" name="Domains">
+                <menuitem id="domain_configurator_menu_action" action="domain_configurator_action"/>
+            </menuitem>
+    </menuitem>
+
+</odoo>

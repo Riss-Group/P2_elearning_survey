@@ -1,0 +1,234 @@
+<odoo>
+    <record id="view_survey_question_form_inherit" model="ir.ui.view">
+        <field name="name">survey.question.form.inherit</field>
+        <field name="model">survey.question</field>
+        <field name="inherit_id" ref="survey.survey_question_form"/>
+        <field name="arch" type="xml">
+            <!-- Inserting new fields after the question_type field -->
+            <xpath expr="//field[@name='question_type']" position="after">
+                <field name="search_model"
+                       placeholder="Search model, e.g., res.partner"
+                       invisible="question_type != 'code'"/>
+                <field name="search_domain"
+                       placeholder="Search domain, e.g., [('name', '=', 'Test Contact')]"
+                       invisible="question_type != 'code'"/>
+            </xpath>
+            <xpath expr="//field[@name='question_type']" position="after">
+                <field name="param_type" placeholder="Select parameter type" invisible="all_params_covered"/>
+                <field name="param_type_checklist" widget="html" readonly="1" invisible="all_params_covered"/>
+                <field name="all_params_covered" readonly="1" invisible="1"/>
+            </xpath>
+<!--            <xpath expr="//page[@name='answers']" position="replace">-->
+<!--                <page string="Answers" name="answers" invisible="is_page or question_type == 'text_box' or scoring_type == 'no_scoring' and question_type in ['numerical_box', 'date', 'datetime']">-->
+<!--                            <group>-->
+<!--                                <group invisible="question_type not in ['char_box', 'numerical_box', 'date', 'datetime', 'code']">-->
+<!--                                    <field name="answer_numerical_box" string="Correct Answer" class="oe_inline" invisible="question_type not in ['numerical_box', 'code']" required="is_scored_question and question_type == 'numerical_box'"/>-->
+<!--                                    <field name="answer_date" string="Correct Answer" class="oe_inline" invisible="question_type != 'date'" required="is_scored_question and question_type == 'date'"/>-->
+<!--                                    <field name="answer_datetime" string="Correct Answer" class="oe_inline" invisible="question_type != 'datetime'" required="is_scored_question and question_type == 'datetime'"/>-->
+
+<!--                                    <field name="validation_email" invisible="question_type != 'char_box'"/>-->
+<!--                                    <field name="save_as_email" invisible="not validation_email or question_type != 'char_box'"/>-->
+<!--                                    <field name="save_as_nickname" invisible="question_type != 'char_box'"/>-->
+<!--                                </group>-->
+
+<!--                                <group invisible="scoring_type == 'no_scoring' or question_type not in ['numerical_box', 'date', 'datetime', 'code']">-->
+<!--                                    <label for="is_scored_question"/>-->
+<!--                                    <div name="survey_scored_question">-->
+<!--                                        <field name="is_scored_question" nolabel="1"/>-->
+<!--                                        <field name="answer_score" class="w-50 mx-2" invisible="not is_scored_question" nolabel="1"/>-->
+<!--                                        <span invisible="not is_scored_question">Points</span>-->
+<!--                                    </div>-->
+<!--                                </group>-->
+<!--                            </group>-->
+<!--                            <field name="suggested_answer_ids" context="{'default_question_id': id}" invisible="question_type not in ['simple_choice', 'multiple_choice', 'matrix', 'code']">-->
+<!--                                <tree editable="bottom">-->
+<!--                                    <field name="sequence" widget="handle"/>-->
+<!--                                    <field name="value" string="Choices"/>-->
+<!--                                    <field name="is_correct" column_invisible="parent.scoring_type == 'no_scoring' or parent.question_type == 'matrix'"/>-->
+<!--                                    <field name="answer_score" column_invisible="parent.scoring_type == 'no_scoring' or parent.question_type == 'matrix'"/>-->
+<!--                                    <field name="value_image_filename" column_invisible="True"/>-->
+<!--                                    <field name="value_image" width="200px" filename="value_image_filename" options="{'accepted_file_extensions': 'image/*'}" column_invisible="parent.question_type == 'matrix'"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+
+<!--                            <field name="matrix_row_ids" context="{'default_matrix_question_id': id}" invisible="question_type != 'matrix'">-->
+<!--                                <tree editable="bottom">-->
+<!--                                    <field name="sequence" widget="handle"/>-->
+<!--                                    <field name="value" string="Rows"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="view_survey_form_inherit" model="ir.ui.view">
+        <field name="name">survey.form.inherit</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_survey_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Modify the list view of question_and_page_ids to include search_model and search_domain before the Copy button -->
+            <xpath expr="//field[@name='question_and_page_ids']/tree//button[@name='copy']" position="before">
+                <field name="search_model" string="Search Model"/>
+                <field name="search_domain" string="Search Domain"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="survey_question_char_box_password_inherit" model="ir.ui.view">
+        <field name="name">survey.question.char.box.password.inherit</field>
+        <field name="inherit_id" ref="survey.question_char_box"/>
+        <field name="arch" type="xml">
+            <xpath expr="//input" position="replace">
+                <input t-if="question.param_type == 'password'" t-att-type="'email' if question.validation_email else 'password'" class="form-control o_survey_question_text_box bg-transparent rounded-0 p-0" t-att-name="question.id" t-att-placeholder="question.question_placeholder" t-att-value="answer_lines[0].value_char_box if answer_lines else None" t-att-data-question-type="question.question_type" t-att-data-validation-length-min="question.validation_length_min if question.validation_required else False" t-att-data-validation-length-max="question.validation_length_max if question.validation_required else False"/>
+                <input t-if="question.param_type != 'password'" t-att-type="'email' if question.validation_email else 'text'" class="form-control o_survey_question_text_box bg-transparent rounded-0 p-0" t-att-name="question.id" t-att-placeholder="question.question_placeholder" t-att-value="answer_lines[0].value_char_box if answer_lines else None" t-att-data-question-type="question.question_type" t-att-data-validation-length-min="question.validation_length_min if question.validation_required else False" t-att-data-validation-length-max="question.validation_length_max if question.validation_required else False"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="survey_question_numerical_box_inherit" model="ir.ui.view">
+        <field name="name">survey.question.numerical.box.inherit</field>
+        <field name="inherit_id" ref="survey.question_numerical_box"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_survey_answer_wrapper p-1 rounded']" position="replace">
+                <div class="o_survey_answer_wrapper p-1 rounded">
+                    <t t-if="question.question_type == 'code'">
+<!--                        <div class="d-flex align-items-center">-->
+<!--                            <input type="number" step="any" class="form-control o_survey_question_numerical_box bg-transparent rounded-0 p-0" t-att-name="question.id" t-att-placeholder="question.question_placeholder" t-att-value="answer_lines[0].value_numerical_box if answer_lines else None" t-att-data-question-type="question.question_type" t-att-data-validation-float-min="question.validation_min_float_value if question.validation_required else False" t-att-data-validation-float-max="question.validation_max_float_value if question.validation_required else False"/>-->
+                            <span t-if="answer_lines and answer_lines[0].answer_is_correct" class="ml-2 text-success">✔️</span>
+                            <span t-if="answer_lines and not answer_lines[0].answer_is_correct" class="ml-2 text-danger">❌</span>
+<!--                        </div>-->
+                    </t>
+                    <t t-else="">
+                        <input type="number" step="any" class="form-control o_survey_question_numerical_box bg-transparent rounded-0 p-0" t-att-name="question.id" t-att-placeholder="question.question_placeholder" t-att-value="answer_lines[0].value_numerical_box if answer_lines else None" t-att-data-question-type="question.question_type" t-att-data-validation-float-min="question.validation_min_float_value if question.validation_required else False" t-att-data-validation-float-max="question.validation_max_float_value if question.validation_required else False"/>
+                    </t>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="survey_page_print_inherit" model="ir.ui.view">
+        <field name="name">survey.page.print.inherit</field>
+        <field name="inherit_id" ref="survey.survey_page_print"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[1]" position="replace">
+                <t name="Survey: print page" t-name="survey.survey_page_print">
+                    <t t-call="survey.layout">
+                        <t t-set="survey_form_readonly" t-value="true"/>
+                        <t t-if="answer.test_entry" t-call="survey.survey_button_form_view"/>
+                        <div class="wrap">
+                            <div class="o_survey_print o_container_small">
+                                <div class="py-5 mt32">
+                                    <h1><span t-field="survey.title" class="text-break"/></h1>
+                                    <t t-if="survey.description"><div t-field="survey.description" class="oe_no_empty text-break"/></t>
+                                    <t t-if="review" t-call="survey.survey_button_retake"/>
+                                </div>
+                                <div t-if="graph_data" class="o_survey_result p-4 col-12 row">
+                                    <div t-if="survey.page_ids" class="survey_graph col-lg-6 d-none d-md-block" data-graph-type="by_section" t-att-data-graph-data="graph_data">
+                                        <canvas id="by_section_chart"/>
+                                    </div>
+                                    <div t-attf-class="survey_graph col-lg-6 #{'offset-lg-3' if not survey.page_ids else ''}" data-graph-type="doughnut" t-att-data-graph-data="graph_data">
+                                        <canvas id="doughnut_chart"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <fieldset disabled="disabled">
+                                        <t t-set="question" t-value="False"/>
+                                        <t t-foreach="survey.question_and_page_ids" t-as="question">
+                                            <t t-if="question.is_page and                                             (any(q in questions_to_display for q in question.question_ids)                                             or not is_html_empty(question.description))">
+                                                <hr t-if="question != survey.page_ids[0]"/>
+                                                <div class="o_page_header mb-5">
+                                                    <h1 t-field="question.title" class="text-break fs-2"/>
+                                                    <div t-if="question.description" t-field="question.description" class="oe_no_empty"/>
+                                                </div>
+                                            </t>
+                                            <t t-if="not question.is_page and not answer or (question in answer.predefined_question_ids &amp; questions_to_display)">
+                                                <t t-set="answer_lines" t-value="answer.user_input_line_ids.filtered(lambda line: line.question_id == question)"/>
+                                                <div class="js_question-wrapper" t-att-id="question.id">
+                                                    <h2 class="fs-4">
+                                                        <span t-field="question.title" class="text-break"/>
+                                                        <span t-if="question.constr_mandatory" class="text-danger">*</span>
+                                                        <span t-if="scoring_display_correction" class="badge rounded-pill" t-att-data-score-question="question.id"/>
+                                                    </h2>
+                                                    <div class="text-muted oe_no_empty mt-1 text-break" t-if="not is_html_empty(question.description)" t-field="question.description"/>
+                                                    <t t-if="question.question_type in ['numerical_box', 'date', 'datetime', 'text_box', 'char_box', 'code']">
+                                                        <t t-if="answer_lines">
+                                                            <t t-set="answer_line" t-value="answer_lines[0]"/>
+                                                            <t t-if="answer_line.skipped">
+                                                                <!-- question was skipped, display an orange block with the text "Skipped" in place of the answer -->
+                                                                <div class="row g-0">
+                                                                    <div class="col-12 col-md-6 col-lg-4 rounded ps-4 o_survey_question_skipped">
+                                                                        <input type="text" t-attf-class="form-control fst-italic o_survey_question_{{question.question_type}} bg-transparent rounded-0 p-0" value="Skipped"/>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                            <t t-elif="answer_line.survey_id.scoring_type != 'no_scoring' and question.question_type in ['numerical_box', 'date', 'datetime'] and question['answer_%s' % question.question_type]">
+                                                                <div class="row g-0">
+                                                                    <div t-attf-class="col-12 col-md-6 col-lg-4 rounded ps-4 #{'bg-success' if answer_line.answer_is_correct else 'bg-danger'}">
+                                                                        <t t-if="question.question_type == 'numerical_box'" t-call="survey.question_numerical_box"/>
+                                                                        <t t-if="question.question_type == 'date'" t-call="survey.question_date"/>
+                                                                        <t t-if="question.question_type == 'datetime'" t-call="survey.question_datetime"/>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <t t-if="question.question_type == 'text_box'" t-call="survey.question_text_box"/>
+                                                                <t t-if="question.question_type == 'char_box'" class="o_survey_print o_survey_comment_container p-0">
+                                                                    <span t-out="answer_lines[0].value_char_box or None"/>
+                                                                </t>
+                                                                <t t-if="question.question_type == 'numerical_box'" t-call="survey.question_numerical_box"/>
+                                                                <t t-if="question.question_type == 'code'" t-call="survey.question_numerical_box"/>
+                                                                <t t-if="question.question_type == 'date'" t-call="survey.question_date"/>
+                                                                <t t-if="question.question_type == 'datetime'" t-call="survey.question_datetime"/>
+                                                            </t>
+                                                            <t t-if="answer_lines.survey_id.scoring_type != 'no_scoring'                                                     and question.question_type in ['numerical_box', 'date', 'datetime']                                                     and question['answer_%s' % question.question_type]                                                     and not answer_line.answer_is_correct">
+                                                                <div class="row g-0">
+                                                                    <t t-set="correct_answer" t-value="question['answer_%s' % question.question_type ]"/>
+                                                                    <div class="col-12 text-success mt-1">
+                                                                        The correct answer was:
+                                                                        <strong t-esc="correct_answer" t-if="question.question_type == 'numerical_box'"/>
+                                                                        <strong t-esc="format_date(correct_answer)" t-if="question.question_type == 'date'"/>
+                                                                        <strong t-esc="format_datetime(correct_answer)" t-if="question.question_type == 'datetime'"/>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-if="question.question_type == 'text_box'" t-call="survey.question_text_box"/>
+                                                            <t t-if="question.question_type == 'char_box'" t-call="survey.question_char_box"/>
+                                                            <t t-if="question.question_type == 'code'" t-call="survey.question_numerical_box"/>
+                                                            <t t-if="question.question_type == 'numerical_box'" t-call="survey.question_numerical_box"/>
+                                                            <t t-if="question.question_type == 'date'" t-call="survey.question_date"/>
+                                                            <t t-if="question.question_type == 'datetime'" t-call="survey.question_datetime"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="question.question_type == 'simple_choice'" t-call="survey.question_simple_choice"/>
+                                                    <t t-if="question.question_type == 'multiple_choice'" t-call="survey.question_multiple_choice"/>
+                                                    <t t-if="question.question_type == 'matrix'" t-call="survey.question_matrix"/>
+                                                    <t t-if="question.question_type in ['simple_choice', 'multiple_choice','matrix']">
+                                                        <t t-if="answer_lines">
+                                                            <t t-if="answer_lines[0].skipped">
+                                                                <div class="row g-0">
+                                                                    <div class="col-12 o_survey_choice_question_skipped mt-1">
+                                                                        This question was skipped
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <div class="o_survey_question_error overflow-hidden border-0 py-0 px-3 alert alert-danger" role="alert"/>
+                                                </div>
+                                            </t>
+                                        </t>
+                                        <!--Set question to false to avoid background miss match as last question is still in context and is used in survey.layout t-call.-->
+                                        <t t-set="question" t-value="False"/>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_survey_survey_form" model="ir.ui.view">
+        <field name="name">survey.survey.form</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_survey_view_form"/>
+        <field name="arch" type="xml">
+            <sheet position="inside">
+                <!-- Add the checklist display -->
+                <group>
+                    <field name="param_type_checklist" widget="html" readonly="1"/>
+                </group>
+            </sheet>
+        </field>
+    </record>
+</odoo>
