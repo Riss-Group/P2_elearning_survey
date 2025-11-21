@@ -8,7 +8,7 @@
     'website': 'https://captivea.com',
     'license': 'LGPL-3',
     'category': 'Captivea/',
-    'version': '17.00',
+    'version': '19.0.0.0',
     'depends': ['base','website_slides_survey'],
     'data': [
         "views/slide_slide_views_inherit.xml",

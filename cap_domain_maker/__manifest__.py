@@ -7,7 +7,7 @@
     'website': 'https://captivea.com',
     'license': 'LGPL-3',
     'category': 'Captivea/',
-    'version': '17.0.0.2',
+    'version': '19.0.0.3',
     'depends': ['base', 'mail'],
     'data': [
         'security/ir.model.access.csv',
