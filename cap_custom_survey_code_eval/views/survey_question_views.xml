@@ -4,7 +4,7 @@
         <field name="model">survey.question</field>
         <field name="inherit_id" ref="survey.survey_question_form"/>
         <field name="arch" type="xml">
-            <!-- Inserting new fields after the question_type field -->
+            <!-- Inserting new fields after the question_type field for question_type == code -->
             <xpath expr="//field[@name='question_type']" position="after">
                 <field name="search_model"
                        placeholder="Search model, e.g., res.partner"
@@ -18,6 +18,7 @@
                 <field name="param_type_checklist" widget="html" readonly="1" invisible="all_params_covered"/>
                 <field name="all_params_covered" readonly="1" invisible="1"/>
             </xpath>
+<!--            Todo tester de décommenter voir ce que ça fait -->
 <!--            <xpath expr="//page[@name='answers']" position="replace">-->
 <!--                <page string="Answers" name="answers" invisible="is_page or question_type == 'text_box' or scoring_type == 'no_scoring' and question_type in ['numerical_box', 'date', 'datetime']">-->
 <!--                            <group>-->
@@ -75,6 +76,7 @@
         </field>
     </record>
 
+    <!-- Todo vérifier que ça marche -->
     <record id="survey_question_char_box_password_inherit" model="ir.ui.view">
         <field name="name">survey.question.char.box.password.inherit</field>
         <field name="inherit_id" ref="survey.question_char_box"/>
@@ -86,6 +88,7 @@
         </field>
     </record>
 
+    <!-- Todo vérifier que ça marche -->
     <record id="survey_question_numerical_box_inherit" model="ir.ui.view">
         <field name="name">survey.question.numerical.box.inherit</field>
         <field name="inherit_id" ref="survey.question_numerical_box"/>
@@ -107,6 +110,7 @@
         </field>
     </record>
 
+    <!-- Todo vérifier que ça marche -->
     <record id="survey_page_print_inherit" model="ir.ui.view">
         <field name="name">survey.page.print.inherit</field>
         <field name="inherit_id" ref="survey.survey_page_print"/>

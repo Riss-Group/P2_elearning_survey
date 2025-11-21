@@ -31,6 +31,7 @@ class Survey(models.Model):
             checklist_html += '</ul>'
             survey.param_type_checklist = checklist_html
 
+    # Todo jamais appelée, considérer l'usage ou la suppression
     @api.model
     def store_params_from_responses(self, user_input):
         # Iterate through all the user's response lines
@@ -46,6 +47,7 @@ class Survey(models.Model):
                 elif question.param_type == 'password':
                     self.password = line.value_text
 
+    # Todo jamais appelée, considérer l'usage ou la suppression
     def _check_and_compute_scores(self):
         for user_input in self.user_input_ids:
             for line in user_input.user_input_line_ids:
