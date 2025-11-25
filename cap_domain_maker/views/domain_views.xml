@@ -43,9 +43,9 @@
         <field name="name">domain.configurator.tree</field>
         <field name="model">domain.configurator</field>
         <field name="arch" type="xml">
-            <tree string="Domain">
+            <list string="Domain">
                 <field name="model_id"/>
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

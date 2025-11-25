@@ -41,21 +41,21 @@
 <!--                                </group>-->
 <!--                            </group>-->
 <!--                            <field name="suggested_answer_ids" context="{'default_question_id': id}" invisible="question_type not in ['simple_choice', 'multiple_choice', 'matrix', 'code']">-->
-<!--                                <tree editable="bottom">-->
+<!--                                <list editable="bottom">-->
 <!--                                    <field name="sequence" widget="handle"/>-->
 <!--                                    <field name="value" string="Choices"/>-->
 <!--                                    <field name="is_correct" column_invisible="parent.scoring_type == 'no_scoring' or parent.question_type == 'matrix'"/>-->
 <!--                                    <field name="answer_score" column_invisible="parent.scoring_type == 'no_scoring' or parent.question_type == 'matrix'"/>-->
 <!--                                    <field name="value_image_filename" column_invisible="True"/>-->
 <!--                                    <field name="value_image" width="200px" filename="value_image_filename" options="{'accepted_file_extensions': 'image/*'}" column_invisible="parent.question_type == 'matrix'"/>-->
-<!--                                </tree>-->
+<!--                                </list>-->
 <!--                            </field>-->
 
 <!--                            <field name="matrix_row_ids" context="{'default_matrix_question_id': id}" invisible="question_type != 'matrix'">-->
-<!--                                <tree editable="bottom">-->
+<!--                                <list editable="bottom">-->
 <!--                                    <field name="sequence" widget="handle"/>-->
 <!--                                    <field name="value" string="Rows"/>-->
-<!--                                </tree>-->
+<!--                                </list>-->
 <!--                            </field>-->
 <!--                        </page>-->
 <!--            </xpath>-->
@@ -68,7 +68,7 @@
         <field name="inherit_id" ref="survey.survey_survey_view_form"/>
         <field name="arch" type="xml">
             <!-- Modify the list view of question_and_page_ids to include search_model and search_domain before the Copy button -->
-            <xpath expr="//field[@name='question_and_page_ids']/tree//button[@name='copy']" position="before">
+            <xpath expr="//field[@name='question_and_page_ids']/list//button[@name='copy']" position="before">
                 <field name="search_model" string="Search Model"/>
                 <field name="search_domain" string="Search Domain"/>
             </xpath>

@@ -25,7 +25,7 @@ class SurveyQuestion(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('question_type') == 'code':
+        if 'question_type' in vals and vals['question_type'] == 'code':
             vals['answer_numerical_box'] = 1
             vals['is_scored_question'] = True
             vals['answer_score'] = 100
